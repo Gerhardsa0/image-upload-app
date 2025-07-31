@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "user_name": "Ettel",
+    "number": 123.45,
+    "image_filename": "e70ea89e-011e-4f9c-8d35-aac842f058d6.jpg",
+    "image_url": "/uploads/e70ea89e-011e-4f9c-8d35-aac842f058d6.jpg",
+    "created_at": "2025-07-31T11:52:35.523109"
+  },
+  {
+    "id": 2,
+    "user_name": "Ettel",
+    "number": 123.45,
+    "image_filename": "bf2e203a-51bf-4e58-bbfa-819d42af40e6.jpeg",
+    "image_url": "/uploads/bf2e203a-51bf-4e58-bbfa-819d42af40e6.jpeg",
+    "created_at": "2025-07-31T11:56:00.674094"
+  },
+  {
+    "id": 3,
+    "user_name": "Andreas",
+    "number": 17.0,
+    "image_filename": "054b3506-c8b2-47c2-8147-659833b1d531.jpg",
+    "image_url": "/uploads/054b3506-c8b2-47c2-8147-659833b1d531.jpg",
+    "created_at": "2025-07-31T12:12:10.841753"
+  }
+]
