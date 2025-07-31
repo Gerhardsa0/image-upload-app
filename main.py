@@ -1,10 +1,10 @@
+import os
 from fastapi import FastAPI, File, UploadFile, Form, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 import shutil
-import os
 import json
 import uuid
 from datetime import datetime
@@ -27,7 +27,6 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 os.makedirs("templates", exist_ok=True)
 os.makedirs("static", exist_ok=True)
 
-# Templates und statische Dateien
 templates = Jinja2Templates(directory="templates")
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -45,7 +44,6 @@ def save_submissions(submissions: List[Dict]):
         json.dump(submissions, f, indent=2, ensure_ascii=False, default=str)
 
 
-# Web Interface Route
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
@@ -60,7 +58,6 @@ async def admin(request: Request):
     })
 
 
-# Deine bestehenden API Routes...
 @app.post("/api/submit")
 async def submit_data(
         image: UploadFile = File(...),
@@ -93,7 +90,7 @@ async def submit_data(
         submissions.append(new_submission)
         save_submissions(submissions)
 
-        print(f"✅ New submission: {user_name} - {number} - Image: {unique_filename}")
+        print(f"✅ New submission: {user_name} - {number}")
 
         return {
             "message": "Submission successful",
@@ -115,11 +112,14 @@ async def get_submissions():
     }
 
 
+# Health check für Railway
+@app.get("/health")
+async def health():
+    return {"status": "healthy"}
+
+
 if __name__ == "__main__":
     import uvicorn
 
-    print("🚀 Starting server...")
-    print("🌐 Web Interface: http://localhost:8000")
-    print("👨‍💼 Admin Panel: http://localhost:8000/admin")
-    print("📖 API Documentation: http://localhost:8000/docs")
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
